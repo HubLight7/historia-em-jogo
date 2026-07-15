@@ -26,36 +26,53 @@ class TutorialScene extends Phaser.Scene {
       strokeThickness: 4
     }).setOrigin(0.5);
 
-    const html = `
-      <div style="position:absolute; left:5%; bottom:5%; width:min(72%, 770px); display:flex; flex-direction:column; gap:14px; pointer-events:auto;">
-        <div class="narrative-box" style="position:relative; width:100%; min-height:240px;">
-          <div class="tag-contexto">Tutorial</div>
-          <div class="text-scroll">
-            <p class="narrative-text">
-              1. Observe o mapa e o vento antes de decidir o rumo.<br>
-              2. Acompanhe os sinais da costa para evitar correntes perigosas.<br>
-              3. Use o tempo certo para manobrar e preservar os suprimentos.<br>
-              4. Conquiste o litoral e avance em direção ao próximo desafio.
-            </p>
-          </div>
-        </div>
-        <button id="play-btn" class="nav-btn" type="button">Zarpar 🎮</button>
-      </div>`;
+    // Renderiza o tutorial usando objetos Phaser 
+    const boxWidth = this.scale.width * 0.58;
+    const boxHeight = 240;
+    const boxX = this.scale.width * 0.5 - boxWidth / 2;
+    const boxY = this.scale.height * 0.32;
 
-    const domElement = this.add.dom(0, 0).createFromHTML(html);
-    domElement.setOrigin(0, 0);
-    domElement.setPosition(0, 0);
+    // Fundo da caixa (fill + stroke)
+    const boxBg = this.add.graphics();
+    boxBg.fillStyle(0xFFFDE7, 1);
+    boxBg.fillRect(boxX, boxY, boxWidth, boxHeight);
+    boxBg.lineStyle(4, 0x000000, 1);
+    boxBg.strokeRect(boxX, boxY, boxWidth, boxHeight);
+    boxBg.setDepth(5);
 
-    const domNode = domElement.node;
-    domNode.style.position = 'absolute';
-    domNode.style.left = '0px';
-    domNode.style.top = '0px';
-    domNode.style.width = `${this.scale.width}px`;
-    domNode.style.height = `${this.scale.height}px`;
-    domNode.style.pointerEvents = 'auto';
+    const tutorialLines = [
+      '1. Observe o mapa e o vento antes de decidir o rumo.',
+      '2. Acompanhe os sinais da costa para evitar correntes perigosas.',
+      '3. Use o tempo certo para manobrar e preservar os suprimentos.',
+      '4. Conquiste o litoral e avance em direção ao próximo desafio.'
+    ];
 
-    const playButton = domNode.querySelector('#play-btn');
-    playButton.addEventListener('click', () => {
+    const tutorialText = this.add.text(boxX + 18, boxY + 14, tutorialLines.join('\n'), {
+      fontFamily: 'Comic Sans MS, Chalkboard SE, sans-serif',
+      fontSize: '18px',
+      color: '#111111',
+      align: 'left'
+    }).setDepth(6);
+
+    // Botão Zarpar 
+    const btnWidth = boxWidth - 40;
+    const btnHeight = 44;
+    const btnX = boxX + (boxWidth - btnWidth) / 2;
+    const btnY = boxY + boxHeight + 18;
+
+    const btnBg = this.add.rectangle(btnX + btnWidth / 2, btnY + btnHeight / 2, btnWidth, btnHeight, 0xffeb3b)
+      .setStrokeStyle(3, 0x000000)
+      .setOrigin(0.5)
+      .setDepth(6)
+      .setInteractive({ useHandCursor: true });
+
+    const btnText = this.add.text(btnBg.x, btnBg.y, 'Zarpar 🎮', {
+      fontFamily: 'Comic Sans MS, Chalkboard SE, sans-serif',
+      fontSize: '16px',
+      color: '#000000'
+    }).setOrigin(0.5).setDepth(7);
+
+    btnBg.on('pointerdown', () => {
       this.cameras.main.fadeOut(600, 0, 0, 0);
       this.time.delayedCall(650, () => {
         this.scene.start('GameScene');
