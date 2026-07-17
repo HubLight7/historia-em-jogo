@@ -84,7 +84,7 @@ class MenuScene extends Phaser.Scene {
 
     startBtn.addEventListener('click', () => this.startExpedition());
     storyBtn.addEventListener('click', () => {
-      window.location.href = 'story7.html';
+      window.location.href = '../historia-cap7/story7.html';
     });
     homeBtn.addEventListener('click', () => {
       window.location.href = 'index.html';

@@ -13,7 +13,7 @@
 
         <div class="comic-panel active">
             <div class="image-wrapper">
-                <img src="/assets/cena1.png" alt="Cena 1" class="comic-img">
+                <img src="../assets/cena1.png" alt="Cena 1" class="comic-img">
                 <div class="vignette"></div>
             </div>
             <div class="narrative-box">
@@ -28,7 +28,7 @@
 
         <div class="comic-panel">
             <div class="image-wrapper">
-                <img src="/assets/cena2.png" alt="Cena 2" class="comic-img">
+                <img src="../assets/cena2.png" alt="Cena 2" class="comic-img">
                 <div class="vignette"></div>
             </div>
             <div class="narrative-box">
@@ -43,7 +43,7 @@
 
         <div class="comic-panel">
             <div class="image-wrapper">
-                <img src="/assets/cena3.png" alt="Cena 3" class="comic-img">
+                <img src="../assets/cena3.png" alt="Cena 3" class="comic-img">
                 <div class="vignette"></div>
             </div>
             <div class="narrative-box">
@@ -58,7 +58,7 @@
 
         <div class="comic-panel">
             <div class="image-wrapper">
-                <img src="/assets/cena4.png" alt="Cena 4" class="comic-img">
+                <img src="../assets/cena4.png" alt="Cena 4" class="comic-img">
                 <div class="vignette"></div>
             </div>
             <div class="narrative-box">
@@ -101,7 +101,7 @@
         const nextBtn = document.getElementById('nextBtn');
         let currentIndex = 0;
 
-        const DESTINATION_URL = 'exploracao-brasil.html'; 
+        const DESTINATION_URL = '../minigame-cap8/minigame-cap8.html'; 
 
         function updatePanels() {
             // Alterna a classe ativa
@@ -118,7 +118,7 @@
 
             // Gerencia botão próximo / Ir para o minigame
             if (currentIndex === panels.length - 1) {
-                nextLegenda.textContent = 'Ir para o minigame';
+                nextLegenda.textContent = 'Iniciar expedição';
                 nextSeta.textContent = '🎮';
                 nextBtn.style.backgroundColor = '#4caf50'; // Verde para indicar conclusão
                 nextBtn.style.color = '#ffffff';
