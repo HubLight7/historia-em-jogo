@@ -118,39 +118,16 @@ class GameScene extends Phaser.Scene {
   }
 
   // =========================================================
-  // NÉVOA — RenderTexture escura + "pincel" radial que a apaga
+  // NÉVOA — mantida como camada invisível para preservar a lógica do jogo
   // =========================================================
   createFog() {
-    const size = this.cfg.revealRadius * 2;
-
-    // cria a textura do pincel (círculo com gradiente radial) uma única vez
-    if (!this.textures.exists('fogBrush')) {
-      const brush = this.textures.createCanvas('fogBrush', size, size);
-      const ctx = brush.getContext();
-      const gradient = ctx.createRadialGradient(
-        size / 2, size / 2, size * 0.08,
-        size / 2, size / 2, size / 2
-      );
-      gradient.addColorStop(0, 'rgba(255,255,255,1)');
-      gradient.addColorStop(1, 'rgba(255,255,255,0)');
-      ctx.fillStyle = gradient;
-      ctx.fillRect(0, 0, size, size);
-      brush.refresh();
-    }
-
-    // imagem "fantasma" (add:false = não entra na cena, só serve de carimbo)
-    this.brushImage = this.make.image({ key: 'fogBrush', add: false });
-
-    this.fog = this.add.renderTexture(0, 0, this.mapW, this.mapH)
+    this.fogOverlay = this.add.rectangle(0, 0, this.mapW, this.mapH, 0x000000, 0)
       .setOrigin(0, 0)
-      .setDepth(50);
-    this.fog.fill(0x0a0806, 1);
+      .setDepth(50)
+      .setScrollFactor(0);
   }
 
   revealAt(x, y) {
-    // visual: "fura" a névoa suavemente na posição do jogador
-    this.fog.erase(this.brushImage, x, y);
-
     // lógica: marca células da grade dentro do raio como reveladas
     const r = this.cfg.revealRadius;
     const minCx = Math.max(0, Math.floor((x - r) / this.cfg.cellSize));
